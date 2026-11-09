@@ -54,7 +54,6 @@ int main()
     displayParcels(parcels, CAPACITY);
 
     // --- STEP D1: Activate after completing the search function ---
-    /*
     int target;
     cout << "Enter a pickup code: ";
     if (!(cin >> target))
@@ -72,11 +71,9 @@ int main()
         cout << "Pickup code " << readyView[position]->pickupCode
              << " | Locker: " << readyView[position]->locker << endl;
     }
-    */
     return 0;
 }
 
-// ===== Resolve only these TODOs now (Part C) =====
 void swapParcelPointers(Parcel *&left, Parcel *&right)
 {
     Parcel *saved = left;
@@ -114,11 +111,30 @@ void quickSortReady(Parcel *view[], int first, int last)
     }
 }
 
-// ===== Resolve this TODO later (Part D) =====
 int binaryFindReady(Parcel *view[], int count, int target)
 {
-    // TODO (Part D): Implement iterative binary search by pickupCode on the sorted view.
-    return -1; // Temporary placeholder; replace with the complete search.
+    int first = 0;
+    int last = count - 1;
+    int result = -1;
+
+    while (first <= last && result == -1)
+    {
+        int middle = first + (last - first) / 2;
+        if (view[middle]->pickupCode == target)
+        {
+            result = middle;
+        }
+        else if (view[middle]->pickupCode < target)
+        {
+            first = middle + 1;
+        }
+        else
+        {
+            last = middle - 1;
+        }
+    }
+
+    return result;
 }
 
 void displayParcels(const Parcel parcels[], int count)
@@ -178,6 +194,17 @@ void displayReady(Parcel *view[], int count)
  * Trace code 505 and the absent ready-view code 460. Give the checked ranges
  * and explain why a view index cannot be used as an index into parcels.
  * Answer:
+ * The sorted view is 190 325 505 580 640 710 with view indexes 0 to 5.
+ * Code 505: first 0, last 5, middle 2. The code at 2 is 505, so it is found right
+ * away and the function returns 2. The locker is L-7.
+ * Code 460: range 0..5, middle 2 has 505 which is bigger, so the next range is 0..1.
+ * Middle 0 has 190 which is smaller, so the range is 1..1. Middle 1 has 325 which is
+ * smaller, so the range is 2..1. Now first is bigger than last, the loop ends and
+ * the function returns -1. Then main prints that there is no ready parcel with that
+ * code.
+ * The 2 returned for 505 is a position in readyView, not in parcels. In parcels the
+ * 505 parcel is at index 7 and parcels[2] is the 580 parcel, so using the view index
+ * in the original array would give the wrong parcel.
  *
  * D4 - Time and auxiliary space
  * For n ready parcels and q queries, compare sorting once then using binary
@@ -185,4 +212,24 @@ void displayReady(Parcel *view[], int count)
  * bounds for this quicksort, balanced-partition bounds, and iterative-search
  * auxiliary space. Distinguish the view storage from recursive-call storage.
  * Answer:
+ * n is the number of ready parcels and q is the number of queries.
+ * Sorting once with this quicksort takes O(n log n) time when the partitions are
+ * balanced and O(n^2) in the worst case, because choosing the middle does not
+ * guarantee balanced partitions. After that each query with binary search takes
+ * O(log n), so q queries take O(q log n). The balanced total is O(n log n + q log n).
+ * Scanning the unsorted view for every query takes O(n) per query, so O(q * n) in
+ * total. Sorting once is better when there are many queries. For only a few queries
+ * the scan can be cheaper than sorting.
+ * The iterative binary search uses O(1) auxiliary space, just a few int variables.
+ * Quicksort uses O(log n) auxiliary space for the recursive calls when it is
+ * balanced and O(n) in the worst case. The view itself is O(n) pointers, but that
+ * storage is needed anyway for the queries and it is not recursive-call storage.
+ *
+ * Extra tests (observed results)
+ * Empty range 0..-1: quickSortReady returns without reading any position.
+ * Single pointer 0..0: the view stays the same (300, L-1).
+ * Three pointers 300 100 200 sorted: 100 200 300. Sorted a second time: 100 200 300.
+ * Search with count 0 for 100: returns -1 without reading view[0].
+ * Search in a view with one pointer (300): code 300 returns 0 and code 301 returns -1.
+ * After all the tests the original parcels kept the same codes, lockers and positions.
  */
