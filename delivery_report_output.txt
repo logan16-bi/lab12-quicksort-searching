@@ -1,0 +1,68 @@
+=== Test 1: ID 310 (active delivery order, found) ===
+Orders before building the report:
+Order: 420 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 1
+Order: 180 | Type: DELIVERY | Status: IN_PROGRESS | Building: Ingenieria | Priority: 3
+Order: 650 | Type: DINE_IN | Status: PENDING | Building: Cafeteria-Lunch | Priority: 1
+Order: 310 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 3
+Order: 205 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 3
+Order: 900 | Type: DELIVERY | Status: COMPLETED | Building: Ingenieria | Priority: 2
+Delivery report:
+Report position: 0 | Order: 205 | Building: Biblioteca | Priority: 3
+Report position: 1 | Order: 310 | Building: Biblioteca | Priority: 3
+Report position: 2 | Order: 420 | Building: Biblioteca | Priority: 1
+Report position: 3 | Order: 180 | Building: Ingenieria | Priority: 3
+Enter an order ID: 310
+Order 310 | Building: Biblioteca | Status: PENDING | Priority: 3
+Orders after building the report:
+Order: 420 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 1
+Order: 180 | Type: DELIVERY | Status: IN_PROGRESS | Building: Ingenieria | Priority: 3
+Order: 650 | Type: DINE_IN | Status: PENDING | Building: Cafeteria-Lunch | Priority: 1
+Order: 310 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 3
+Order: 205 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 3
+Order: 900 | Type: DELIVERY | Status: COMPLETED | Building: Ingenieria | Priority: 2
+
+=== Test 2: ID 900 (excluded order, COMPLETED) ===
+Orders before building the report:
+Order: 420 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 1
+Order: 180 | Type: DELIVERY | Status: IN_PROGRESS | Building: Ingenieria | Priority: 3
+Order: 650 | Type: DINE_IN | Status: PENDING | Building: Cafeteria-Lunch | Priority: 1
+Order: 310 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 3
+Order: 205 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 3
+Order: 900 | Type: DELIVERY | Status: COMPLETED | Building: Ingenieria | Priority: 2
+Delivery report:
+Report position: 0 | Order: 205 | Building: Biblioteca | Priority: 3
+Report position: 1 | Order: 310 | Building: Biblioteca | Priority: 3
+Report position: 2 | Order: 420 | Building: Biblioteca | Priority: 1
+Report position: 3 | Order: 180 | Building: Ingenieria | Priority: 3
+Enter an order ID: 900
+No active delivery order with that ID in the report.
+Orders after building the report:
+Order: 420 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 1
+Order: 180 | Type: DELIVERY | Status: IN_PROGRESS | Building: Ingenieria | Priority: 3
+Order: 650 | Type: DINE_IN | Status: PENDING | Building: Cafeteria-Lunch | Priority: 1
+Order: 310 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 3
+Order: 205 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 3
+Order: 900 | Type: DELIVERY | Status: COMPLETED | Building: Ingenieria | Priority: 2
+
+=== Test 3: ID 777 (nonexistent) ===
+Orders before building the report:
+Order: 420 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 1
+Order: 180 | Type: DELIVERY | Status: IN_PROGRESS | Building: Ingenieria | Priority: 3
+Order: 650 | Type: DINE_IN | Status: PENDING | Building: Cafeteria-Lunch | Priority: 1
+Order: 310 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 3
+Order: 205 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 3
+Order: 900 | Type: DELIVERY | Status: COMPLETED | Building: Ingenieria | Priority: 2
+Delivery report:
+Report position: 0 | Order: 205 | Building: Biblioteca | Priority: 3
+Report position: 1 | Order: 310 | Building: Biblioteca | Priority: 3
+Report position: 2 | Order: 420 | Building: Biblioteca | Priority: 1
+Report position: 3 | Order: 180 | Building: Ingenieria | Priority: 3
+Enter an order ID: 777
+No active delivery order with that ID in the report.
+Orders after building the report:
+Order: 420 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 1
+Order: 180 | Type: DELIVERY | Status: IN_PROGRESS | Building: Ingenieria | Priority: 3
+Order: 650 | Type: DINE_IN | Status: PENDING | Building: Cafeteria-Lunch | Priority: 1
+Order: 310 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 3
+Order: 205 | Type: DELIVERY | Status: PENDING | Building: Biblioteca | Priority: 3
+Order: 900 | Type: DELIVERY | Status: COMPLETED | Building: Ingenieria | Priority: 2
