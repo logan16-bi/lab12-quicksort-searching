@@ -44,18 +44,19 @@ int main()
     if (!(cin >> target))
     {
         cout << "Invalid code input." << endl;
-        return 1; // Stop before searching with an unread value.
-    }
-
-    int position = binaryFindEquipment(equipment, 0, COUNT - 1, target);
-    if (position == -1)
-    {
-        cout << "Equipment not found." << endl;
     }
     else
     {
-        cout << "Found code " << equipment[position].assetCode
-             << " in cabinet " << equipment[position].cabinet << endl;
+        int position = binaryFindEquipment(equipment, 0, COUNT - 1, target);
+        if (position == -1)
+        {
+            cout << "Equipment not found." << endl;
+        }
+        else
+        {
+            cout << "Found code " << equipment[position].assetCode
+                 << " in cabinet " << equipment[position].cabinet << endl;
+        }
     }
     return 0;
 }
@@ -98,32 +99,35 @@ int partitionEquipment(Equipment equipment[], int first, int last)
 
 void quickSortEquipment(Equipment equipment[], int first, int last)
 {
-    if (first >= last)
+    if (first < last) // Empty and one-record ranges need no partition.
     {
-        return; // Empty and one-record ranges need no partition.
+        int pivotIndex = partitionEquipment(equipment, first, last);
+        quickSortEquipment(equipment, first, pivotIndex - 1);
+        quickSortEquipment(equipment, pivotIndex + 1, last);
     }
-    int pivotIndex = partitionEquipment(equipment, first, last);
-    quickSortEquipment(equipment, first, pivotIndex - 1);
-    quickSortEquipment(equipment, pivotIndex + 1, last);
 }
 
 // --- STEP B3: Define recursive lookup on the sorted catalog ---
 int binaryFindEquipment(const Equipment equipment[], int first, int last, int target)
 {
-    if (first > last)
+    int result = -1; // An empty search range proves that the code is absent.
+    if (first <= last)
     {
-        return -1; // An empty search range proves that the code is absent.
+        int middle = first + (last - first) / 2;
+        if (equipment[middle].assetCode == target)
+        {
+            result = middle; // A one-record range must still be checked for a match.
+        }
+        else if (equipment[middle].assetCode < target)
+        {
+            result = binaryFindEquipment(equipment, middle + 1, last, target);
+        }
+        else
+        {
+            result = binaryFindEquipment(equipment, first, middle - 1, target);
+        }
     }
-    int middle = first + (last - first) / 2;
-    if (equipment[middle].assetCode == target)
-    {
-        return middle; // A one-record range must still be checked for a match.
-    }
-    if (equipment[middle].assetCode < target)
-    {
-        return binaryFindEquipment(equipment, middle + 1, last, target);
-    }
-    return binaryFindEquipment(equipment, first, middle - 1, target);
+    return result;
 }
 
 /*

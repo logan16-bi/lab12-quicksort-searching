@@ -59,17 +59,19 @@ int main()
     if (!(cin >> target))
     {
         cout << "Invalid code input." << endl;
-        return 1;
-    }
-    int position = binaryFindReady(readyView, readyCount, target);
-    if (position == -1)
-    {
-        cout << "No ready parcel with that code." << endl;
     }
     else
     {
-        cout << "Pickup code " << readyView[position]->pickupCode
-             << " | Locker: " << readyView[position]->locker << endl;
+        int position = binaryFindReady(readyView, readyCount, target);
+        if (position == -1)
+        {
+            cout << "No ready parcel with that code." << endl;
+        }
+        else
+        {
+            cout << "Pickup code " << readyView[position]->pickupCode
+                 << " | Locker: " << readyView[position]->locker << endl;
+        }
     }
     return 0;
 }
